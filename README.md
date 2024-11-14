@@ -12,7 +12,7 @@ Este repositório será responsável pela interface em Angular, fornecendo uma a
 
 ## Solução
 
-A aplicação foi desenvolvida usando Angular com os seguintes recursos:
+A aplicação será desenvolvida usando Angular com os seguintes recursos:
 - Angular Material para uma interface responsiva e amigável.
 - Integração com Backend via HTTP para consumir as APIs do projeto Spring Boot.
 - Autenticação JWT para gerenciar o acesso a áreas protegidas.
