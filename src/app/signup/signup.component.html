@@ -1,0 +1,68 @@
+<div class="signup-form">
+  <h2>Cadastro</h2>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="firstName">Nome</label>
+      <input id="firstName" formControlName="firstName" type="text" required />
+      <div *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('firstName')?.errors?.['required']">Nome é obrigatório</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Sobrenome</label>
+      <input id="lastName" formControlName="lastName" type="text" required />
+      <div *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('lastName')?.errors?.['required']">Sobrenome é obrigatório</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" required />
+      <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('email')?.errors?.['required']">Email é obrigatório</small>
+        <small *ngIf="signupForm.get('email')?.errors?.['email']">Formato de email inválido</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="birthday">Data de Nascimento</label>
+      <input id="birthday" formControlName="birthday" type="date" required />
+      <div *ngIf="signupForm.get('birthday')?.touched && signupForm.get('birthday')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('birthday')?.errors?.['required']">Data de nascimento é obrigatória</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="login">Login</label>
+      <input id="login" formControlName="login" type="text" required />
+      <div *ngIf="signupForm.get('login')?.touched && signupForm.get('login')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('login')?.errors?.['required']">Login é obrigatório</small>
+        <small *ngIf="signupForm.get('login')?.errors?.['minlength']">Mínimo de 3 caracteres</small>
+        <small *ngIf="signupForm.get('login')?.errors?.['maxlength']">Máximo de 20 caracteres</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input id="password" formControlName="password" type="password" required />
+      <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('password')?.errors?.['required']">Senha é obrigatória</small>
+        <small *ngIf="signupForm.get('password')?.errors?.['minlength']">Mínimo de 6 caracteres</small>
+        <small *ngIf="signupForm.get('password')?.errors?.['maxlength']">Máximo de 50 caracteres</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Telefone</label>
+      <input id="phone" formControlName="phone" type="text" required />
+      <div *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid" class="error-messages">
+        <small *ngIf="signupForm.get('phone')?.errors?.['required']">Telefone é obrigatório</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="signupForm.invalid" class="submit-btn">Cadastrar</button>
+  </form>
+</div>

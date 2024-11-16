@@ -1,33 +1,93 @@
-# car-user-management-frontend
-Este repositório será responsável pela interface em Angular, fornecendo uma aplicação front-end com Angular Material para autenticação, cadastro e consulta de usuários e carros, com integração aos endpoints do backend.
+# CarUserManagementFrontend
 
-## Estórias de Usuário
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
 
-1. Tela de Cadastro de Usuário: Como um usuário, quero ter uma interface onde posso preencher meus dados para realizar o cadastro no sistema.
-2. Tela de Login: Como um usuário, quero uma tela de login onde eu possa entrar no sistema com login e senha.
-3. Tela de Listagem de Carros: Como um usuário autenticado, quero ver uma lista dos meus carros cadastrados.
-4. Formulário de Cadastro de Carro: Como um usuário autenticado, quero uma tela para adicionar novos carros ao meu perfil.
-5. Atualização de Dados: Como um usuário, quero poder atualizar meus dados pessoais e de carros pela interface.
-6. Remoção de Carro: Como um usuário, quero poder remover um carro específico pela interface.
+## Development Server
 
-## Solução
+Run `ng serve` for a dev server. Navigate to [http://localhost:4200/](http://localhost:4200/). The application will automatically reload if you change any of the source files.
 
-A aplicação será desenvolvida usando Angular com os seguintes recursos:
-- Angular Material para uma interface responsiva e amigável.
-- Integração com Backend via HTTP para consumir as APIs do projeto Spring Boot.
-- Autenticação JWT para gerenciar o acesso a áreas protegidas.
-- Tratamento de Erros para exibir mensagens de erro claras e padronizadas.
-- Interface CRUD Completa para cadastro e consulta de usuários e carros.
+## Build
 
-## Execução e Build
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-1. Clone o repositório: `git clone https://github.com/luigigenova/car-user-management-frontend.git`
-2. Navegue até o diretório do projeto: `cd car-user-management-frontend`
-3. Instale as dependências: `npm install`
-4. Execute a aplicação: `ng serve`
-5. Acesse a interface em `http://localhost:4200`
+## Code Scaffolding
 
-## Deploy e Testes
+Run `ng generate component component-name` to generate a new component. You can also use:
 
-- Deploy: Instruções para deploy do front-end serão adicionadas conforme a plataforma escolhida.
-- Testes Unitários: Para executar os testes, utilize o comando: `ng test`
+- `ng generate directive`
+- `ng generate pipe`
+- `ng generate service`
+- `ng generate class`
+- `ng generate guard`
+- `ng generate interface`
+- `ng generate enum`
+- `ng generate module`
+
+## Running Unit Tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running End-to-End Tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Project Structure 
+
+src/ 
+├── app/ 
+│   ├── components/         # Main components 
+│   ├── guards/             # Route guards for protected routes 
+│   ├── interceptors/       # HTTP interceptors 
+│   ├── services/           # Centralized business logic 
+│   ├── app.component.ts    # Main application component 
+│   ├── app.routes.ts       # Route definitions 
+│   └── app.config.ts       # Application configuration 
+├── assets/                 # Static resources 
+└── environments/           # Environment configurations (dev/prod) 
+     
+
+
+## Technologies Used
+
+- **Angular Material**: For modern and responsive design.
+- **RxJS**: For managing asynchronous events.
+- **HTTP Client**: For backend communication.
+- **Angular Standalone Components**: To simplify module dependencies.
+
+## Features Implemented
+
+- **Authentication**:
+  - Login with JWT token storage.
+  - Protected route redirection via `AuthGuard`.
+- **User Registration**:
+  - Client-side validation for form fields.
+- **Dashboard**:
+  - Initial data display post-login.
+- **HTTP Interceptor**:
+  - Automatic token management for headers.
+- **Testing**:
+  - A test component (`TesteComponent`) for validating interceptors.
+
+## Future Improvements
+
+- Integrate the car management API.
+- Enhance visual aspects of the dashboard. 
+- Comprehensive unit testing using Karma. 
+
+## Getting Started 
+
+To get started, clone the repository and install dependencies: 
+
+```bash
+git clone https://github.com/luigigenova/car-user-management-frontend.git 
+cd car-user-management-frontend 
+npm install 
+```
+
+Start the development server: 
+
+```bash
+ng serve
+``` 
+
+Ensure the backend is running at `http://localhost:8080.`
