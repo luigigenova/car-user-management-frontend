@@ -5,17 +5,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule, MatSnackBarModule]
+  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule, MatSnackBarModule, MatIconModule, MatFormFieldModule]
 })
 export class SignupComponent {
   signupForm: FormGroup;
-  message: string | null = null;
+  showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,72 +29,59 @@ export class SignupComponent {
     this.signupForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ],
+      email: ['', [Validators.required, Validators.email]],
       birthday: ['', Validators.required],
-      login: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(20),
-          Validators.pattern('^[a-zA-Z0-9_]+$')
-        ]
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(50)
-        ]
-      ],
-      phone: ['', Validators.required]
+      login: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
+      phone: ['', Validators.required],
     });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
     if (this.signupForm.valid) {
+      const formValue = { ...this.signupForm.value };
+      formValue.birthday = new Date(formValue.birthday).toISOString().split('T')[0];
       this.authService.signup(this.signupForm.value).subscribe({
         next: (response: any) => {
-          if (response.token) {
-            // Trata o caso de sucesso
-            this.snackBar.open('Usuário cadastrado com sucesso!', 'Fechar', {
-              duration: 5000,
-              horizontalPosition: 'right',
-              verticalPosition: 'top'
-            });
-            this.authService.setToken(response.token);
-            this.router.navigate(['/dashboard']); 
+          if (response.status === 201) {
+            this.router.navigate(['/login']);
           } else {
-            // Tratamento alternativo caso não tenha token, se aplicável
-            this.snackBar.open('Usuário cadastrado com sucesso!', 'Fechar', {
+            this.snackBar.open('Unknown registration error', 'Fechar', {
               duration: 5000,
               horizontalPosition: 'right',
-              verticalPosition: 'top'
+              verticalPosition: 'top',
             });
-            this.router.navigate(['/login']); 
           }
         },
-        error: (err) => {
-          // Trata o caso de erro
-          const errorMessage = err.error ? err.error : err.message ? err.message : 'Erro desconhecido';
-          this.snackBar.open(errorMessage, 'Fechar', {
-            duration: 5000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-          this.message = errorMessage;
-        }
+        error: (error) => {
+          if (error.status === 400 || error.status === 409 || error.status === 500) {
+            this.snackBar.open(error.message, 'Fechar', {
+              duration: 5000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            });
+          } else {
+            this.snackBar.open('Unknown registration error', 'Fechar', {
+              duration: 5000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            });
+          }
+        },
       });
     } else {
-      this.message = "Preencha todos os campos corretamente";
+      this.snackBar.open('Preencha todos os campos corretamente', 'Fechar', {
+        duration: 5000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+      });
     }
   }
-  
+
 }
+
+

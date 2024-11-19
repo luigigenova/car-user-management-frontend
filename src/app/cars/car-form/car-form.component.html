@@ -1,0 +1,37 @@
+<div class="car-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ isEditMode ? 'Editar Carro' : 'Criar Novo Carro' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" [formGroup]="carForm" class="form-content">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Ano</mat-label>
+          <input matInput id="year" formControlName="year" type="number" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Modelo</mat-label>
+          <input matInput id="model" formControlName="model" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Placa</mat-label>
+          <input matInput id="licensePlate" formControlName="licensePlate" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Cor</mat-label>
+          <input matInput id="color" formControlName="color" />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" [disabled]="carForm.invalid" (click)="onSubmit()">
+        {{ isEditMode ? 'Atualizar' : 'Criar' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card-actions class="centered-actions">
+    <button mat-raised-button class="modern-gray-btn" (click)="goBack()">
+      voltar
+    </button>
+  </mat-card-actions>
+</div>

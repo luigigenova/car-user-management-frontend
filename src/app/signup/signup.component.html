@@ -47,13 +47,29 @@
 
     <div class="form-group">
       <label for="password">Senha</label>
-      <input id="password" formControlName="password" type="password" required />
+      <div class="password-container">
+        <input
+          id="password"
+          formControlName="password"
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Digite sua senha"
+          required
+        />
+        <button
+          type="button"
+          class="toggle-password"
+          (click)="togglePasswordVisibility()"
+          aria-label="Toggle password visibility"
+        >
+          <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </div>
       <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="error-messages">
         <small *ngIf="signupForm.get('password')?.errors?.['required']">Senha é obrigatória</small>
         <small *ngIf="signupForm.get('password')?.errors?.['minlength']">Mínimo de 6 caracteres</small>
         <small *ngIf="signupForm.get('password')?.errors?.['maxlength']">Máximo de 50 caracteres</small>
       </div>
-    </div>
+    </div>    
 
     <div class="form-group">
       <label for="phone">Telefone</label>

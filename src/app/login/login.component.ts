@@ -4,48 +4,61 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { CustomSnackbarComponent } from '../shared/components/custom-snackbar/custom-snackbar.component';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule ]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, MatSnackBarModule, CustomSnackbarComponent ]
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  message: string | null = null;
+  submitted = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
   onSubmit() {
+    this.submitted = true; 
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => {
-          // Armazene o token
           localStorage.setItem('token', response.token);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/cars']);
         },
-        error: err => this.message = err.message
+        error: (error) => {
+          this.snackBar.openFromComponent(CustomSnackbarComponent, {
+            data: 'Credenciais inválidas.<br>Por favor, realize seu cadastro.',
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['snackbar-error']
+          });
+        },
       });
     } else {
-      this.message = "Preencha todos os campos corretamente";
+      this.snackBar.open('Preencha todos os campos corretamente.', 'Fechar', {
+        duration: 5000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+      });
     }
   }
 
-  // onSubmit() {
-  //   if (this.loginForm.valid) {
-  //     // Simulação de login
-  //     const token = 'dummy-token'; // Normalmente, você obteria isso de uma API
-  //     this.authService.setToken(token);
-  //     this.router.navigate(['/dashboard']); // Redireciona para o dashboard após login
-  //   }
-  // }
+  goToSignup() {
+    this.router.navigate(['/users']);
+  }
 }

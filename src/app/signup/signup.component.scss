@@ -60,5 +60,28 @@
         background-color: #0056b3;
       }
     }
+
+    .password-container {
+      position: relative;
+    
+      .toggle-password {
+        position: absolute;
+        right: -1px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+    
+        mat-icon {
+          color: #a0a0a0; 
+        }
+    
+        &:hover mat-icon {
+          color: #808080; 
+        }
+      }
+    }
+    
   }
   

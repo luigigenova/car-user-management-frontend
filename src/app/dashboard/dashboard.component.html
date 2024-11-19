@@ -1,37 +1,32 @@
-<div class="dashboard">
-    <mat-toolbar color="primary">
-      <span>Dashboard</span>
-      <span class="spacer"></span>
-      <button mat-button (click)="logout()">Sair</button>
-    </mat-toolbar>
-  
-    <div class="content">
-      <h2>Bem-vindo ao Dashboard</h2>
-      <mat-card>
-        <h3>Usuários</h3>
-        <table mat-table [dataSource]="users" class="mat-elevation-z8">
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let user"> {{user.id}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
-            <td mat-cell *matCellDef="let user"> {{user.firstName}} {{user.lastName}} </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Ações </th>
-            <td mat-cell *matCellDef="let user">
-              <button mat-button color="primary" (click)="editarUsuario(user.id)">Editar</button>
-              <button mat-button color="warn" (click)="excluirUsuario(user.id)">Excluir</button>
-            </td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </mat-card>
-    </div>
+<div class="dashboard-container">
+  <mat-toolbar color="primary" class="toolbar">
+    <span>Dashboard</span>
+    <button mat-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
+  </mat-toolbar>
+
+  <div class="dashboard-content">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Gestão de Usuários</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Acesse as funcionalidades relacionadas aos usuários, como listar, adicionar ou editar.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="navigateToUsers()">Gerenciar Usuários</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Gestão de Carros</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Acesse as funcionalidades relacionadas aos carros, como listar, adicionar ou editar.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="navigateToCars()">Gerenciar Carros</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
-  
+</div>

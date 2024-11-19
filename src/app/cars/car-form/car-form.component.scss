@@ -1,0 +1,92 @@
+.car-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+
+  mat-card {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    mat-card-header {
+      background-color: #f5f5f5;
+      border-radius: 10px 10px 0 0;
+      padding: 10px 20px;
+
+      mat-card-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+
+    mat-card-content {
+      padding: 20px;
+    }
+
+    mat-card-actions {
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .form-content {
+    display: flex;
+    flex-direction: column;
+
+    .form-field {
+      margin-bottom: 15px;
+    }
+  }
+
+  button[mat-raised-button] {
+    width: 100%;
+    background-color: #757575;
+    color: white;
+
+    &:hover {
+      background-color: #616161;
+    }
+
+    &:disabled {
+      background-color: #bdbdbd;
+    }
+  }
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 2px solid #42a5f5; /* Cor azul clara */
+  color: #42a5f5; /* Azul claro */
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #ffffff; /* Fundo branco */
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #42a5f5; /* Azul claro */
+    color: #ffffff; /* Texto branco */
+    border: 2px solid #1e88e5; /* Azul mais escuro */
+  }
+
+  mat-icon {
+    font-size: 18px;
+  }
+}
+
+.centered-goback {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+}
+
+centered-actions {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
