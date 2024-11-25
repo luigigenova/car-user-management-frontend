@@ -1,0 +1,61 @@
+<div class="user-form-container">
+  <h2>User Edit</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-grid">
+    <mat-form-field appearance="fill">
+      <mat-label>Firstname</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Lastname</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Birthday</mat-label>
+      <input matInput formControlName="birthday" type="date" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" />
+      <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+        <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" />
+    </mat-form-field>
+
+    <h3>Available Cars</h3>
+    <mat-selection-list>
+      <mat-list-option *ngFor="let car of availableCars" (click)="toggleCarSelection(car.id)">
+        {{ car.model }} ({{ car.licensePlate }}) - {{ car.color }}
+      </mat-list-option>
+    </mat-selection-list>
+    <button mat-raised-button color="primary" (click)="associateSelectedCars()">
+      Associate Selected Cars
+    </button>
+
+    <h3>Associated Cars</h3>
+    <ul class="associated-car-list">
+      <li *ngFor="let car of userCars" class="associated-car-item">
+        <div class="car-info">
+          <span>{{ car.model }} ({{ car.licensePlate }})</span>
+        </div>
+        <div class="car-actions">
+          <button mat-button color="warn" (click)="removeCar(car.id)">Remove</button>
+        </div>
+      </li>
+    </ul>
+
+    <button mat-raised-button color="primary" [disabled]="userForm.invalid">Save</button>
+    <button mat-raised-button color="warn" type="button" (click)="goBack()">Cancel</button>
+  </form>
+</div>

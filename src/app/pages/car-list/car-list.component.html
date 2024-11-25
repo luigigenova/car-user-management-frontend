@@ -1,0 +1,33 @@
+<div class="car-list">
+  <h2>Lista de Carros</h2>
+
+  <button class="add-car-btn" (click)="navigateToAddCar()">Adicionar Novo Carro</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Ano</th>
+        <th>Modelo</th>
+        <th>Placa</th>
+        <th>Cor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of cars">
+        <td>{{ car.year }}</td>
+        <td>{{ car.model }}</td>
+        <td>{{ car.licensePlate }}</td>
+        <td>{{ car.color }}</td>
+        <td>
+          <button class="edit-btn" (click)="editCar(car.id)">
+            <mat-icon>edit</mat-icon> Editar
+          </button>
+          <button class="delete-btn" (click)="deleteCar(car.id)">
+            <mat-icon>delete</mat-icon> Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

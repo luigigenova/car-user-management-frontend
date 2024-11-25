@@ -1,4 +1,113 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reseta estilos padrão do navegador */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+  overflow-x: hidden; /* Evita scroll horizontal indesejado */
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Estilos globais do componente principal */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #eaeaea;
+  overflow-x: hidden; /* Garante que o conteúdo principal não cause scroll horizontal */
+}
+
+/* Estilo para mensagens de notificação */
+.custom-snackbar {
+  position: absolute; /* Modifique de fixed para absolute */
+  top: 16px; /* Distância do topo */
+  right: 16px; /* Distância da borda direita */
+  background-color: #323232;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  max-width: 90%;
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-40px);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilo responsivo para dispositivos móveis */
+@media (max-width: 768px) {
+  .custom-snackbar {
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  app-root {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Estilo adicional para botões */
+button {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+  background-color: #b0bec5;
+  cursor: not-allowed;
+}
+
+/* Estilo global para formulários */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+}
+
+/* Adiciona estilo geral para mensagens de erro */
+.error-message {
+  color: #f44336;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: -5px;
+}

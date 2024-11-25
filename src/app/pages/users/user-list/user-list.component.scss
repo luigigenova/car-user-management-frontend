@@ -1,0 +1,40 @@
+.user-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* Add spacing specifically for buttons in the actions column */
+td.mat-column-actions button {
+  margin-right: 10px; /* Adds space between the buttons */
+}
+
+/* Remove margin for the last button to prevent unnecessary spacing */
+td.mat-column-actions button:last-child {
+  margin-right: 0;
+}

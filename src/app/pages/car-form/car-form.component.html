@@ -1,0 +1,32 @@
+<div class="car-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Create New Car</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" [formGroup]="carForm" class="form-content">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Year</mat-label>
+          <input matInput formControlName="year" type="number" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Model</mat-label>
+          <input matInput formControlName="model" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>License Plate</mat-label>
+          <input matInput formControlName="licensePlate" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Color</mat-label>
+          <input matInput formControlName="color" />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" [disabled]="carForm.invalid" (click)="onSubmit()">
+        Create
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,45 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.logout-btn {
+  font-weight: bold;
+}
+
+.dashboard-content {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: var(--cor-de-fundo-principal);
+}
+
+.dashboard-card {
+  width: 300px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+mat-card-content p {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+button {
+  width: 100%;
+}
+
+

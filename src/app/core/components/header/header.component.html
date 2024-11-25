@@ -1,0 +1,19 @@
+<header class="header">
+  <div class="logo">
+    <img src="assets/car_user.png" alt="Logo do Projeto">
+    <span>Car User Management</span>
+  </div>
+  <div class="user-section">
+    <ng-container *ngIf="!isDashboardPage">
+      <button class="dashboard-btn" routerLink="/">Dashboard</button>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn; else authButtons">
+      <span class="user-name">{{ name }}</span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #authButtons>
+      <button class="login-btn" routerLink="/login">Login</button>
+      <button class="signup-btn" routerLink="/signup">Signup</button>
+    </ng-template>
+  </div>
+</header>

@@ -1,0 +1,38 @@
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--cor-de-fundo-principal);
+}
+
+.content {
+  flex: 1;
+  position: relative; /* Permite que filhos posicionados "absolutos" sejam ancorados aqui */
+  padding: 16px; /* Opcional: ajuste o padding conforme necessário */
+}
+
+/* Estilo para mensagens de notificação */
+.custom-snackbar {
+  position: absolute; /* Posiciona relativo ao .content */
+  top: 16px; /* Margem do topo */
+  right: 16px; /* Margem da direita */
+  background-color: #323232;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2000; /* Garante que fique acima do conteúdo */
+  max-width: 90%;
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

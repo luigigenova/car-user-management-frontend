@@ -1,0 +1,71 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+
+  .logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .user-section {
+    display: flex;
+    align-items: center;
+
+    .dashboard-btn {
+      margin-right: 15px;
+      background-color: white;
+      color: #003366;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dashboard-btn:hover {
+      background-color: #002244;
+      color: white;
+    }
+
+    .user-name {
+      margin-right: 15px;
+      font-weight: bold;
+    }
+
+    .logout-btn,
+    .login-btn,
+    .signup-btn {
+      margin-left: 10px;
+      background-color: white;
+      color: #003366;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover,
+    .login-btn:hover,
+    .signup-btn:hover {
+      background-color: #002244;
+      color: white;
+    }
+  }
+}

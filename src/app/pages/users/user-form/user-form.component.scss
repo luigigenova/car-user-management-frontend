@@ -1,0 +1,78 @@
+.signup-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .password-container {
+    display: flex;
+    align-items: center;
+
+    mat-icon-button {
+      margin-left: 8px;
+    }
+  }
+
+  .car-list {
+    margin: 20px 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    button {
+      min-width: 120px;
+    }
+  }
+
+  .associated-car-list {
+    list-style: none;
+    padding: 0;
+  
+    .associated-car-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+  
+      .car-info {
+        flex: 1; 
+      }
+  
+      .car-actions {
+        button {
+          margin-left: auto; 
+        }
+      }
+    }
+  }
+  
+}
