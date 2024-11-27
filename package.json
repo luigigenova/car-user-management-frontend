@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:car-user-management-frontend": "node dist/car-user-management-frontend/server/server.mjs"
+    "build:ssr": "ng build --configuration=development && ng run car-user-management-frontend:server:development",
+    "serve:ssr": "node dist/car-user-management-frontend/server/main.js"
   },
   "private": true,
   "dependencies": {

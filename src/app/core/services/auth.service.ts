@@ -1,105 +1,123 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
-import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { ApiResponse } from '../../model/api-response.model';
+import { environment } from '../../../environments/environment';
 
 /**
  * Service responsible for user authentication and session management.
+ * Adheres to S.O.L.I.D principles and incorporates Design Patterns like Dependency Injection.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  /** API URL for authentication requests */
-  private apiUrl = 'http://localhost:8080/api';
+  /** API base URL for authentication requests */
+  private readonly apiUrl: string = environment.apiUrl;
 
-  /** Observable to track user's logged-in state */
-  private isLoggedInSubject = new BehaviorSubject<boolean>(!!this.getToken());
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  /** Endpoints defined in the environment file */
+  private readonly endpoints = environment.endpoints;
 
-  /** Key for storing username in localStorage */
-  private usernameKey = 'username';
+  /**
+   * Subject to track user's logged-in state.
+   * Implements the Observer Design Pattern.
+   */
+  private readonly isLoggedInSubject = new BehaviorSubject<boolean>(!!this.getToken());
 
-  /** User's name */
-  private name = '';
+  /** Observable to expose the logged-in state */
+  readonly isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
+  /** Key used for storing the username in localStorage */
+  private readonly usernameKey = 'username';
+
+  /** Key used for storing the user's name in localStorage */
+  private readonly nameKey = 'name';
 
   /** Determines if the code is running in the browser (SSR safe) */
-  private isBrowser: boolean;
+  private readonly isBrowser: boolean;
 
   /**
    * Constructor with dependencies injected.
-   *
-   * @param http HTTP client for API communication.
-   * @param platformId Platform identifier (browser or server).
+   * @param http - HTTP client for API communication.
+   * @param platformId - Platform identifier (browser or server).
    */
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private readonly http: HttpClient, @Inject(PLATFORM_ID) private readonly platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   /**
-   * Registers a new user.
-   * @param data User data for registration.
+   * Registers a new user in the system.
+   * @param data - User data for registration.
    * @returns Observable with the API response.
    */
   signup(data: any): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.apiUrl}/signup`, data, { observe: 'response' }).pipe(
-      map((response) => ({
-        status: response.status,
-        message: response.body?.message || 'Unknown success',
-      })),
-      catchError((error: HttpErrorResponse) => {
-        const errorMessage = error.error?.error || error.message || 'Unknown error';
-        return throwError(() => ({
-          status: error.status,
-          message: errorMessage,
-        }));
-      })
-    );
+    return this.http
+      .post<ApiResponse>(`${this.apiUrl}${this.endpoints.users}/signup`, data, { observe: 'response' })
+      .pipe(
+        map((response) => ({
+          status: response.status,
+          message: response.body?.message || 'User successfully registered.',
+        })),
+        catchError(this.handleError)
+      );
   }
 
   /**
-   * Logs in the user.
-   * @param data User credentials (username and password).
+   * Logs in the user and stores the token and name in localStorage.
+   * @param data - User credentials (username and password).
    * @returns Observable with the token, user's name, and success message.
    */
   login(data: any): Observable<{ token: string; name: string; message: string }> {
-    return this.http.post<{ token: string; name: string; message: string }>(`${this.apiUrl}/signin`, data).pipe(
-      map((response) => {
-        this.setToken(response.token);
-        this.setName(response.name);
-        this.setLastLoginTime(); // Set the session start time
-        this.isLoggedInSubject.next(true);
-        return response;
-      }),
-      catchError((error: HttpErrorResponse) => {
-        const errorMessage = error.error?.message || 'Error during login';
-        return throwError(() => new Error(errorMessage));
-      })
-    );
+    return this.http
+      .post<{ token: string; name: string; message: string }>(
+        `${this.apiUrl}${this.endpoints.users}/signin`,
+        data
+      )
+      .pipe(
+        map((response) => {
+          this.setToken(response.token);
+          this.setName(response.name);
+          this.setLastLoginTime();
+          this.isLoggedInSubject.next(true);
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   /**
-   * Stores the user's name.
-   * @param name User's name.
+   * Sets the user's name in localStorage.
+   * @param name - User's name.
    */
   setName(name: string): void {
-    this.name = name;
+    if (this.isBrowser) {
+      localStorage.setItem(this.nameKey, name);
+    }
   }
 
   /**
-   * Retrieves the user's name.
-   * @returns User's name.
+   * Retrieves the user's name from localStorage.
+   * @returns User's name or an empty string if not found.
    */
   getName(): string {
-    return this.name;
+    return this.isBrowser ? localStorage.getItem(this.nameKey) || '' : '';
+  }
+
+  /**
+   * Removes the user's name from localStorage.
+   */
+  removeName(): void {
+    if (this.isBrowser) {
+      localStorage.removeItem(this.nameKey);
+    }
   }
 
   /**
    * Stores the JWT token in localStorage.
-   * @param token JWT token.
+   * @param token - JWT token.
    */
   setToken(token: string): void {
     if (this.isBrowser) {
@@ -112,21 +130,7 @@ export class AuthService {
    * @returns JWT token or null if not found.
    */
   getToken(): string | null {
-    if (this.isBrowser) {
-      return localStorage.getItem('token');
-    }
-    return null;
-  }
-
-  /**
-   * Retrieves the username from localStorage.
-   * @returns Username or an empty string if not found.
-   */
-  getUsername(): string {
-    if (this.isBrowser) {
-      return localStorage.getItem(this.usernameKey) || '';
-    }
-    return '';
+    return this.isBrowser ? localStorage.getItem('token') : null;
   }
 
   /**
@@ -137,6 +141,7 @@ export class AuthService {
       localStorage.removeItem('token');
       localStorage.removeItem(this.usernameKey);
       localStorage.removeItem('lastLoginTime');
+      this.removeName();
     }
     this.isLoggedInSubject.next(false);
   }
@@ -153,10 +158,10 @@ export class AuthService {
 
     try {
       const decodedToken: any = jwtDecode(token);
-      const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-      return decodedToken.exp > currentTime; // Check if the token has expired
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp > currentTime;
     } catch (error) {
-      return false; // Invalid token or decoding error
+      return false;
     }
   }
 
@@ -182,13 +187,35 @@ export class AuthService {
    * Updates the last login timestamp to the current time.
    */
   updateLastLoginTime(): void {
-    localStorage.setItem('lastLoginTime', Date.now().toString());
+    if (this.isBrowser) {
+      localStorage.setItem('lastLoginTime', Date.now().toString());
+    }
   }
 
   /**
    * Sets the last login timestamp to the current time.
    */
   setLastLoginTime(): void {
-    localStorage.setItem('lastLoginTime', Date.now().toString());
+    if (this.isBrowser) {
+      localStorage.setItem('lastLoginTime', Date.now().toString());
+    }
+  }
+
+  /**
+   * Retrieves the username from localStorage.
+   * @returns Username or an empty string if not found.
+   */
+  getUsername(): string {
+    return this.isBrowser ? localStorage.getItem(this.usernameKey) || '' : '';
+  }
+
+  /**
+   * Handles HTTP errors and transforms them into meaningful messages.
+   * @param error - The HTTP error response.
+   * @returns Observable throwing a formatted error message.
+   */
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    const errorMessage = error.error?.message || error.message || 'An unknown error occurred.';
+    return throwError(() => new Error(errorMessage));
   }
 }
